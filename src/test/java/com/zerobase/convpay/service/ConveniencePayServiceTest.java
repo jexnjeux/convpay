@@ -10,12 +10,19 @@ import com.zerobase.convpay.dto.PayResponse;
 import com.zerobase.convpay.type.PayCancelResult;
 import com.zerobase.convpay.type.PayMethodType;
 import com.zerobase.convpay.type.PayResult;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 class ConveniencePayServiceTest {
   // ConveniencePayService 의 단독 기능이 아니라 moneyAdapter 를 활용하고 있기 때문에 완벽한 Unit Test 는 아님!
 
-  ConveniencePayService conveniencePayService = new ConveniencePayService();
+  ConveniencePayService conveniencePayService = new ConveniencePayService(
+      new HashSet<>(
+          Arrays.asList(new MoneyAdapter(), new CardAdapter())
+      ),
+      new DiscountByConvenience()
+  );
 
   @Test
   void pay_success() {
@@ -46,7 +53,8 @@ class ConveniencePayServiceTest {
   @Test
   void pay_cance_success() {
     //given
-    PayCancelRequest payCancelRequest = new PayCancelRequest(PayMethodType.MONEY, ConvenienceType.G25, 1000);
+    PayCancelRequest payCancelRequest = new PayCancelRequest(PayMethodType.MONEY,
+        ConvenienceType.G25, 1000);
 
     //when
     PayCancelResponse payCancelResponse = conveniencePayService.payCancel(payCancelRequest);
@@ -58,7 +66,8 @@ class ConveniencePayServiceTest {
   @Test
   void pay_cancel_fail() {
     //given
-    PayCancelRequest payCancelRequest = new PayCancelRequest(PayMethodType.MONEY, ConvenienceType.G25, 99);
+    PayCancelRequest payCancelRequest = new PayCancelRequest(PayMethodType.MONEY,
+        ConvenienceType.G25, 99);
 
     //when
     PayCancelResponse payCancelResponse = conveniencePayService.payCancel(

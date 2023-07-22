@@ -12,21 +12,27 @@ import com.zerobase.convpay.type.PayMethodType;
 import com.zerobase.convpay.type.PayResult;
 import com.zerobase.convpay.dto.PayCancelResponse;
 import com.zerobase.convpay.type.PaymentResult;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class ConveniencePayService { // 편결이
+  private final Map<PayMethodType, PaymentInterface> paymentInterfaceMap = new HashMap<>();
+  private final DiscountInterface discountInterface;
 
-  private final MoneyAdapter moneyAdapter = new MoneyAdapter(); // 한 번 만들면 바꿀 일이 없기 떄문에 final
-  private final CardAdapter cardAdapter = new CardAdapter();
-//  private final DiscountInterface discountInterface = new DiscountByPayMethod();
-  private final DiscountInterface discountInterface = new DiscountByConvenience();
+  public ConveniencePayService(Set<PaymentInterface> paymentInterfaceSet,
+      DiscountInterface discountInterface) {
+    paymentInterfaceSet.forEach(
+        paymentInterface -> paymentInterfaceMap.put(
+            paymentInterface.getPayMethodType(),
+            paymentInterface
+        )
+    );
+    this.discountInterface = discountInterface;
+  }
 
   public PayResponse pay(PayRequest payRequest) {
-    PaymentInterface paymentInterface;
-    if (payRequest.getPaymethodType() == PayMethodType.CARD){
-      paymentInterface = cardAdapter;
-    } else {
-      paymentInterface = moneyAdapter;
-    }
+    PaymentInterface paymentInterface = paymentInterfaceMap.get(payRequest.getPaymethodType());
 
     // 성공과 실패를 if / else 로 하는 것은 피하자
 
@@ -49,13 +55,7 @@ public class ConveniencePayService { // 편결이
   }
 
   public PayCancelResponse payCancel(PayCancelRequest payCancelRequest) {
-    PaymentInterface paymentInterface;
-
-    if (payCancelRequest.getPayMethodType() == PayMethodType.CARD) {
-      paymentInterface = cardAdapter;
-    } else {
-      paymentInterface = moneyAdapter;
-    }
+    PaymentInterface paymentInterface = paymentInterfaceMap.get(payCancelRequest.getPayMethodType());
 
     CancelPaymentResult cancelPaymentResult = paymentInterface.cancelPayment(
         payCancelRequest.getPayCancelAmount());
