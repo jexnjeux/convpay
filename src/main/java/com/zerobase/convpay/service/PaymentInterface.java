@@ -5,7 +5,7 @@ import com.zerobase.convpay.type.PaymentResult;
 
 public interface PaymentInterface {
 
-  PaymentResult payment(Integer payAmoung);
+  PaymentResult payment(Integer payAmount);
 
   CancelPaymentResult cancelPayment(Integer cancelAmount);
 

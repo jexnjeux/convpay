@@ -17,6 +17,8 @@ public class ConveniencePayService { // 편결이
 
   private final MoneyAdapter moneyAdapter = new MoneyAdapter(); // 한 번 만들면 바꿀 일이 없기 떄문에 final
   private final CardAdapter cardAdapter = new CardAdapter();
+//  private final DiscountInterface discountInterface = new DiscountByPayMethod();
+  private final DiscountInterface discountInterface = new DiscountByConvenience();
 
   public PayResponse pay(PayRequest payRequest) {
     PaymentInterface paymentInterface;
@@ -36,13 +38,14 @@ public class ConveniencePayService { // 편결이
     // Exception case 3
 
     // Success case (Only one)
-    PaymentResult paymentResult = paymentInterface.payment(payRequest.getPayAmount());
+    Integer discountedAmount = discountInterface.getDiscountedAmount(payRequest);
+    PaymentResult paymentResult = paymentInterface.payment(discountedAmount);
 
     if (paymentResult == PaymentResult.PAYMENT_FAIL) {
       return new PayResponse(PayResult.FAIL, 0);
     }
 
-    return new PayResponse(PayResult.SUCCESS, payRequest.getPayAmount());
+    return new PayResponse(PayResult.SUCCESS, discountedAmount);
   }
 
   public PayCancelResponse payCancel(PayCancelRequest payCancelRequest) {
