@@ -20,14 +20,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope("prototype")
 public class ConveniencePayService { // 편결이
   private final Map<PayMethodType, PaymentInterface> paymentInterfaceMap = new HashMap<>();
   private final DiscountInterface discountInterface;
 
 
   public ConveniencePayService(Set<PaymentInterface> paymentInterfaceSet,
-      @Qualifier("discountByPayMethod")
       DiscountInterface discountInterface) {
     paymentInterfaceSet.forEach(
         paymentInterface -> paymentInterfaceMap.put(
