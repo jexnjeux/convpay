@@ -15,6 +15,7 @@ import com.zerobase.convpay.type.PaymentResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,14 +25,15 @@ public class ConveniencePayService { // 편결이
 
 
   public ConveniencePayService(Set<PaymentInterface> paymentInterfaceSet,
-      DiscountInterface discountByConvenience) {
+      @Qualifier("discountByPayMethod")
+      DiscountInterface discountInterface) {
     paymentInterfaceSet.forEach(
         paymentInterface -> paymentInterfaceMap.put(
             paymentInterface.getPayMethodType(),
             paymentInterface
         )
     );
-    this.discountInterface = discountByConvenience;
+    this.discountInterface = discountInterface;
   }
 
   public PayResponse pay(PayRequest payRequest) {

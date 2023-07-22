@@ -1,6 +1,7 @@
 package com.zerobase.convpay;
 
 //import com.zerobase.convpay.config.ApplicationConfig;
+import com.zerobase.convpay.config.ApplicationConfig;
 import com.zerobase.convpay.dto.PayCancelRequest;
 import com.zerobase.convpay.dto.PayCancelResponse;
 import com.zerobase.convpay.dto.PayRequest;
@@ -17,8 +18,8 @@ public class UserClient {
   public static void main(String[] args) {
 //     '사용자' -> 편결이 -> 머니
 
-    ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-        "spring-config.xml");
+    ApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+      ApplicationConfig.class);
 
     ConveniencePayService conveniencePayService = applicationContext.getBean(
         "conveniencePayService", ConveniencePayService.class);
