@@ -27,4 +27,13 @@ public class PayCancelResponse {
   public void setPayCanceledAmount(Integer payCanceledAmount) {
     this.payCanceledAmount = payCanceledAmount;
   }
+
+  // toString() 은 제일 아래 만드는게 컨벤션
+  @Override
+  public String toString() {
+    return "PayCancelResponse{" +
+        "payCancelResult=" + payCancelResult +
+        ", payCanceledAmount=" + payCanceledAmount +
+        '}';
+  }
 }
