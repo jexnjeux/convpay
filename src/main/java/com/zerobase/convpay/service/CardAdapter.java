@@ -5,7 +5,11 @@ import com.zerobase.convpay.type.CardUseCancelResult;
 import com.zerobase.convpay.type.CardUseResult;
 import com.zerobase.convpay.type.PayMethodType;
 import com.zerobase.convpay.type.PaymentResult;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 
+@Component
 public class CardAdapter implements PaymentInterface {
 
   // 1. 인증

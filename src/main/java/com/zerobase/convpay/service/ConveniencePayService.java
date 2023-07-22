@@ -15,20 +15,23 @@ import com.zerobase.convpay.type.PaymentResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ConveniencePayService { // 편결이
   private final Map<PayMethodType, PaymentInterface> paymentInterfaceMap = new HashMap<>();
   private final DiscountInterface discountInterface;
 
+
   public ConveniencePayService(Set<PaymentInterface> paymentInterfaceSet,
-      DiscountInterface discountInterface) {
+      DiscountInterface discountByConvenience) {
     paymentInterfaceSet.forEach(
         paymentInterface -> paymentInterfaceMap.put(
             paymentInterface.getPayMethodType(),
             paymentInterface
         )
     );
-    this.discountInterface = discountInterface;
+    this.discountInterface = discountByConvenience;
   }
 
   public PayResponse pay(PayRequest payRequest) {

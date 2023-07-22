@@ -5,7 +5,9 @@ import com.zerobase.convpay.type.MoneyUseCancelResult;
 import com.zerobase.convpay.type.MoneyUseResult;
 import com.zerobase.convpay.type.PayMethodType;
 import com.zerobase.convpay.type.PaymentResult;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MoneyAdapter implements PaymentInterface {
 
   public MoneyUseResult use(Integer payAmount) { // 편의점 정보는 필요없고, 금액 정보만 필요함
