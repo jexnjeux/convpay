@@ -5,6 +5,7 @@ import com.zerobase.convpay.type.CardUseCancelResult;
 import com.zerobase.convpay.type.CardUseResult;
 import com.zerobase.convpay.type.PayMethodType;
 import com.zerobase.convpay.type.PaymentResult;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;

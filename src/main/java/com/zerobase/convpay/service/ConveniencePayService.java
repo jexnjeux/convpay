@@ -16,9 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class ConveniencePayService { // 편결이
   private final Map<PayMethodType, PaymentInterface> paymentInterfaceMap = new HashMap<>();
   private final DiscountInterface discountInterface;
